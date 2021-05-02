@@ -14,38 +14,29 @@ import {
 
 import { TempalteEntity } from "./template.entity";
 
-import {
-	TemplateFieldTypeEnum,
-	TemplateFieldTypeValues,
-} from "core/enums/template-field-type";
+import { LanguageEnum, LanguageValues } from "core/enums/language";
 
 import { Limits } from "v1/config/limits";
 
 import { DefaultOmitEntityFields } from "types/entity";
 
-@Entity("template_fields")
-export class TempalteFieldEntity extends BaseEntity {
+@Entity("template_contents")
+export class TempalteContentEntity extends BaseEntity {
 	@PrimaryColumn({
 		name: "template_id",
 	})
 	public templateId: string;
 
 	@PrimaryColumn({
-		length: Limits.templateField.field.max,
+		enum: LanguageValues(),
 	})
-	public field: string;
+	public language: LanguageEnum;
 
 	@Column({
-		nullable: false,
-		enum: TemplateFieldTypeValues(),
-	})
-	public type: TemplateFieldTypeEnum;
-
-	@Column({
-		length: Limits.templateField.description.max,
+		length: Limits.templateContent.content.max,
 		nullable: false,
 	})
-	public description: string;
+	public content: string;
 
 	@CreateDateColumn({
 		name: "created_at",
@@ -59,20 +50,20 @@ export class TempalteFieldEntity extends BaseEntity {
 	})
 	public updatedAt: Date;
 
-	@ManyToOne(() => TempalteEntity, template => template.fields)
+	@ManyToOne(() => TempalteEntity, template => template.contents)
 	@JoinColumn({
 		name: "template_id",
 	})
 	public template: TempalteEntity;
 }
 
-export type TempalteFieldType = Omit<
-	TempalteFieldEntity,
+export type TempalteContentType = Omit<
+	TempalteContentEntity,
 	DefaultOmitEntityFields | "template"
 >;
 
-export type TempalteFieldRepository = Repository<TempalteFieldEntity>;
+export type TempalteContentRepository = Repository<TempalteContentEntity>;
 
-export type TempalteFieldFindMany = FindManyOptions<TempalteFieldEntity>;
+export type TempalteContentFindMany = FindManyOptions<TempalteContentEntity>;
 
-export type TempalteFieldFindOne = FindOneOptions<TempalteFieldEntity>;
+export type TempalteContentFindOne = FindOneOptions<TempalteContentEntity>;

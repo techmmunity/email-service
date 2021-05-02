@@ -13,6 +13,7 @@ import {
 	OneToMany,
 } from "typeorm";
 
+import { TempalteContentEntity } from "./template-content.entity";
 import { TempalteFieldEntity } from "./template-field.entity";
 
 import { ApplicationEnum, ApplicationValues } from "core/enums/applications";
@@ -54,11 +55,29 @@ export class TempalteEntity extends BaseEntity {
 	})
 	public updatedAt: Date;
 
-	@OneToMany(() => TempalteFieldEntity, templateField => templateField.template)
+	@OneToMany(
+		() => TempalteFieldEntity,
+		templateField => templateField.template,
+		{
+			cascade: true,
+		},
+	)
 	public fields: Array<TempalteFieldEntity>;
+
+	@OneToMany(
+		() => TempalteContentEntity,
+		templateContent => templateContent.template,
+		{
+			cascade: true,
+		},
+	)
+	public contents: Array<TempalteContentEntity>;
 }
 
-export type TempalteType = Omit<TempalteEntity, DefaultOmitEntityFields>;
+export type TempalteType = Omit<
+	TempalteEntity,
+	DefaultOmitEntityFields | "fields" | "contents"
+>;
 
 export type TempalteRepository = Repository<TempalteEntity>;
 
