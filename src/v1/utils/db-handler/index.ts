@@ -36,7 +36,7 @@ export const DbHandler = (handlers: Array<DbComplexErrorMessage>) => (
 			isCorrectCode(err, handler) &&
 			isCorrectTable(err, handler) &&
 			isCorrectColumn(err, handler) &&
-			(await passesValidation(err, handler)),
+			passesValidation(err, handler),
 	);
 
 	const fieldValue = getValue(err);
