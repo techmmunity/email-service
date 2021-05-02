@@ -12,14 +12,14 @@
 
 ## Initial config
 
-- [ ] Change the project name on `package.json`
-- [ ] Change the name of the project on `docker-compose.yml` (5 places)
-- [ ] Change the name of the project in the "docker:clear" script on `package.json`
-- [ ] Configure the `src/swagger.ts` file
-- [ ] Add project to [CodeFactor](https://www.codefactor.io/)
-- [ ] Add project to [DeepScan](https://deepscan.io/dashboard/#view=team&tid=13883)
-- [ ] Add project to [Coveralls](https://coveralls.io/welcome)
-- [ ] Update the badges on README.md
+- [x] Change the project name on `package.json`
+- [x] Change the name of the project on `docker-compose.yml` (5 places)
+- [x] Change the name of the project in the "docker:clear" script on `package.json`
+- [x] Configure the `src/swagger.ts` file
+- [x] Add project to [CodeFactor](https://www.codefactor.io/)
+- [x] Add project to [DeepScan](https://deepscan.io/dashboard/#view=team&tid=13883)
+- [x] Add project to [Coveralls](https://coveralls.io/welcome)
+- [x] Update the badges on README.md
 
 ## After the first test file be added to the project
 

@@ -2,7 +2,7 @@ version: "3.8"
 services:
   db:
     image: "postgres"
-    container_name: base_service_db
+    container_name: email_service_db
     ports:
       - "5432:5432"
     environment:
@@ -12,19 +12,19 @@ services:
     volumes:
       - database-data:/var/lib/postgresql/data/
     networks:
-      - base_service_network
+      - email_service_network
   api:
     build:
       context: "."
       dockerfile: Dockerfile.dev
-    container_name: base-service_api
+    container_name: email-service_api
     command: yarn dev:docker
     depends_on:
       - db
     ports:
       - 3000:3000
     networks:
-      - base_service_network
+      - email_service_network
     env_file:
       - .env.docker
     volumes:
@@ -36,5 +36,5 @@ volumes:
   nodemodules:
 
 networks:
-  base_service_network:
+  email_service_network:
     driver: bridge
