@@ -10,7 +10,10 @@ import {
 	Index,
 	UpdateDateColumn,
 	Unique,
+	OneToMany,
 } from "typeorm";
+
+import { TempalteFieldEntity } from "./template-field.entity";
 
 import { ApplicationEnum, ApplicationValues } from "core/enums/applications";
 
@@ -50,6 +53,9 @@ export class TempalteEntity extends BaseEntity {
 		nullable: false,
 	})
 	public updatedAt: Date;
+
+	@OneToMany(() => TempalteFieldEntity, templateField => templateField.template)
+	public fields: Array<TempalteFieldEntity>;
 }
 
 export type TempalteType = Omit<TempalteEntity, DefaultOmitEntityFields>;

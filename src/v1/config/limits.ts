@@ -10,4 +10,14 @@ export const Limits = {
 			max: 25,
 		},
 	},
+	templateField: {
+		field: {
+			min: 3,
+			max: 50,
+		},
+		description: {
+			min: 5,
+			max: 1000,
+		},
+	},
 };
