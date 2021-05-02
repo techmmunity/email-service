@@ -20,4 +20,10 @@ export const Limits = {
 			max: 1000,
 		},
 	},
+	templateContent: {
+		content: {
+			min: 3,
+			max: 25000,
+		},
+	},
 };
