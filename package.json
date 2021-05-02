@@ -1,5 +1,5 @@
 {
-	"name": "base-service",
+	"name": "email-service",
 	"version": "0.0.1",
 	"description": "",
 	"author": "Techmmunity",
@@ -77,7 +77,7 @@
 		"update-dependencies": "yarn upgrade-interactive --latest",
 		"clone:core": "./scripts/clone-core.sh",
 		"docker": "docker-compose up",
-		"docker:clear": "docker container rm base-service_api && docker image rm base-service_api && docker volume rm base-service_nodemodules",
+		"docker:clear": "docker container rm email-service_api && docker image rm email-service_api && docker volume rm email-service_nodemodules",
 		"migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config ormconfig.migrations.json migration:generate -d src/v1/migrations -n",
 		"husky:pre-commit": "tsc && lint-staged",
 		"temp:test-tsc": "tsc"
