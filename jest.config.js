@@ -11,6 +11,7 @@ module.exports = {
 		"!v*/api/**/service/**/*.schema.ts",
 		"!v*/api/health/**",
 	],
+	clearMocks: true,
 	setupFiles: ["./v1/tests/setup.ts"],
 	coverageDirectory: "../coverage",
 	testEnvironment: "node",

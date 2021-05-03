@@ -13,8 +13,8 @@ import {
 	OneToMany,
 } from "typeorm";
 
-import { TempalteContentEntity } from "./template-content.entity";
-import { TempalteFieldEntity } from "./template-field.entity";
+import { TemplateContentEntity } from "./template-content.entity";
+import { TemplateFieldEntity } from "./template-field.entity";
 
 import { ApplicationEnum, ApplicationValues } from "core/enums/applications";
 
@@ -24,7 +24,7 @@ import { DefaultOmitEntityFields } from "types/entity";
 
 @Entity("templates")
 @Unique(["application", "code"])
-export class TempalteEntity extends BaseEntity {
+export class TemplateEntity extends BaseEntity {
 	@PrimaryColumn({
 		length: Limits.ids.uuid.length,
 	})
@@ -56,31 +56,31 @@ export class TempalteEntity extends BaseEntity {
 	public updatedAt: Date;
 
 	@OneToMany(
-		() => TempalteFieldEntity,
+		() => TemplateFieldEntity,
 		templateField => templateField.template,
 		{
 			cascade: true,
 		},
 	)
-	public fields: Array<TempalteFieldEntity>;
+	public fields: Array<TemplateFieldEntity>;
 
 	@OneToMany(
-		() => TempalteContentEntity,
+		() => TemplateContentEntity,
 		templateContent => templateContent.template,
 		{
 			cascade: true,
 		},
 	)
-	public contents: Array<TempalteContentEntity>;
+	public contents: Array<TemplateContentEntity>;
 }
 
-export type TempalteType = Omit<
-	TempalteEntity,
+export type TemplateType = Omit<
+	TemplateEntity,
 	DefaultOmitEntityFields | "fields" | "contents"
 >;
 
-export type TempalteRepository = Repository<TempalteEntity>;
+export type TemplateRepository = Repository<TemplateEntity>;
 
-export type TempalteFindMany = FindManyOptions<TempalteEntity>;
+export type TemplateFindMany = FindManyOptions<TemplateEntity>;
 
-export type TempalteFindOne = FindOneOptions<TempalteEntity>;
+export type TemplateFindOne = FindOneOptions<TemplateEntity>;

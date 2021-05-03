@@ -12,7 +12,7 @@ import {
 	JoinColumn,
 } from "typeorm";
 
-import { TempalteEntity } from "./template.entity";
+import { TemplateEntity } from "./template.entity";
 
 import {
 	TemplateFieldTypeEnum,
@@ -24,7 +24,7 @@ import { Limits } from "v1/config/limits";
 import { DefaultOmitEntityFields } from "types/entity";
 
 @Entity("template_fields")
-export class TempalteFieldEntity extends BaseEntity {
+export class TemplateFieldEntity extends BaseEntity {
 	@PrimaryColumn({
 		name: "template_id",
 	})
@@ -59,20 +59,20 @@ export class TempalteFieldEntity extends BaseEntity {
 	})
 	public updatedAt: Date;
 
-	@ManyToOne(() => TempalteEntity, template => template.fields)
+	@ManyToOne(() => TemplateEntity, template => template.fields)
 	@JoinColumn({
 		name: "template_id",
 	})
-	public template: TempalteEntity;
+	public template: TemplateEntity;
 }
 
-export type TempalteFieldType = Omit<
-	TempalteFieldEntity,
+export type TemplateFieldType = Omit<
+	TemplateFieldEntity,
 	DefaultOmitEntityFields | "template"
 >;
 
-export type TempalteFieldRepository = Repository<TempalteFieldEntity>;
+export type TemplateFieldRepository = Repository<TemplateFieldEntity>;
 
-export type TempalteFieldFindMany = FindManyOptions<TempalteFieldEntity>;
+export type TemplateFieldFindMany = FindManyOptions<TemplateFieldEntity>;
 
-export type TempalteFieldFindOne = FindOneOptions<TempalteFieldEntity>;
+export type TemplateFieldFindOne = FindOneOptions<TemplateFieldEntity>;
