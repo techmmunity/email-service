@@ -11,17 +11,17 @@ module.exports = {
 		"!v*/api/**/service/**/*.schema.ts",
 		"!v*/api/health/**",
 	],
-	clearMocks: true,
 	setupFiles: ["./v1/tests/setup.ts"],
 	coverageDirectory: "../coverage",
 	testEnvironment: "node",
 	moduleDirectories: ["node_modules", "src"],
-	// coverageThreshold: {
-	// 	global: {
-	// 		branches: 100,
-	// 		functions: 100,
-	// 		lines: 100,
-	// 		statements: 100,
-	// 	},
-	// },
+	clearMocks: true,
+	coverageThreshold: {
+		global: {
+			branches: 100,
+			functions: 100,
+			lines: 100,
+			statements: 100,
+		},
+	},
 };
