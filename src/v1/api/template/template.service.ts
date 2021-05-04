@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Transactional } from "typeorm-transactional-cls-hooked";
 
 import { create, CreateParams } from "./service/create";
-import { findByCode, FindByCodeParams } from "./service/find-by-code";
+import { findFormatted, FindFormattedParams } from "./service/find-formatted";
 
 import { TemplateEntity, TemplateRepository } from "./entities/template.entity";
 
@@ -27,8 +27,8 @@ export class TemplateService {
 	}
 
 	@Transactional()
-	public findByCode(params: FindByCodeParams) {
-		return findByCode(
+	public findFormatted(params: FindFormattedParams) {
+		return findFormatted(
 			{
 				TemplateRepository: this.TemplateRepository,
 			},

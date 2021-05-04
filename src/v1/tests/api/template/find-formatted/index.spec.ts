@@ -8,7 +8,7 @@ import { TemplateMock } from "v1/tests/mocks/template";
 import { TemplateContentMock } from "v1/tests/mocks/template-content";
 import { TemplateFieldMock } from "v1/tests/mocks/template-field";
 
-describe("TemplateService > findByCode", () => {
+describe("TemplateService > findFormatted", () => {
 	let service: TemplateService;
 
 	beforeAll(async () => {
@@ -33,7 +33,7 @@ describe("TemplateService > findByCode", () => {
 		const templateContentDoc = TemplateContentMock.doc({
 			templateId: templateDoc.id,
 			language: LanguageEnum.EN,
-			content: "foo",
+			content: `<!DOCTYPE html><html><head><title>Title</title><style>h1 { padding: 1px; }</style></head><body><h1></h1></body></html>`,
 		});
 
 		TemplateMock.repository.findOne.mockResolvedValue({
@@ -45,8 +45,9 @@ describe("TemplateService > findByCode", () => {
 		let result;
 
 		try {
-			result = await service.findByCode({
+			result = await service.findFormatted({
 				code: "example.template",
+				language: LanguageEnum.EN,
 			});
 		} catch (e) {
 			result = e;
@@ -54,9 +55,14 @@ describe("TemplateService > findByCode", () => {
 
 		expect(TemplateMock.repository.findOne).toBeCalledTimes(1);
 		expect(result).toStrictEqual({
-			...templateDoc,
-			fields: [templateFieldDoc],
-			contents: [templateContentDoc],
+			fields: [
+				{
+					field: templateFieldDoc.field,
+					type: templateFieldDoc.type,
+				},
+			],
+			content:
+				'<!DOCTYPE html><html><head><title>Title</title></head><body><h1 style="padding: 1px;"></h1></body></html>',
 		});
 	});
 
@@ -66,8 +72,9 @@ describe("TemplateService > findByCode", () => {
 		let result;
 
 		try {
-			result = await service.findByCode({
+			result = await service.findFormatted({
 				code: "non.existent.template",
+				language: LanguageEnum.EN,
 			});
 		} catch (err) {
 			result = err;
@@ -77,6 +84,42 @@ describe("TemplateService > findByCode", () => {
 		expect(result.status).toBe(404);
 		expect(result.response).toStrictEqual({
 			errors: ["Template not found"],
+		});
+	});
+
+	it("should throw error if content with selected language not exists", async () => {
+		const templateDoc = TemplateMock.doc({
+			application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
+			code: "example.template",
+		});
+		const templateFieldDoc = TemplateFieldMock.doc({
+			templateId: templateDoc.id,
+			field: "example",
+			type: TemplateFieldTypeEnum.STRING,
+			descripion: "foo bar foo bar",
+		});
+
+		TemplateMock.repository.findOne.mockResolvedValue({
+			...templateDoc,
+			fields: [templateFieldDoc],
+			contents: [],
+		});
+
+		let result;
+
+		try {
+			result = await service.findFormatted({
+				code: "non.existent.template",
+				language: LanguageEnum.EN,
+			});
+		} catch (err) {
+			result = err;
+		}
+
+		expect(TemplateMock.repository.findOne).toBeCalledTimes(1);
+		expect(result.status).toBe(404);
+		expect(result.response).toStrictEqual({
+			errors: [`Template content with language "${LanguageEnum.EN}" not found`],
 		});
 	});
 });
