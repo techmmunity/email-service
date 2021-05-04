@@ -2,6 +2,7 @@ import { TemplateService } from "v1/api/template/template.service";
 
 import { ApplicationEnum } from "core/enums/applications";
 import { LanguageEnum } from "core/enums/language";
+import { TemplateFieldTypeEnum } from "core/enums/template-field-type";
 
 import { TemplateMock } from "v1/tests/mocks/template";
 import { TemplateContentMock } from "v1/tests/mocks/template-content";
@@ -26,6 +27,7 @@ describe("TemplateService > findByCode", () => {
 		const templateFieldDoc = TemplateFieldMock.doc({
 			templateId: templateDoc.id,
 			field: "example",
+			type: TemplateFieldTypeEnum.STRING,
 			descripion: "foo bar foo bar",
 		});
 		const templateContentDoc = TemplateContentMock.doc({
