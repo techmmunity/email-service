@@ -8,9 +8,6 @@ export interface CreateTemplateContentDoc {
 	updatedAt?: Date;
 }
 
-const buildContent = (content: string) =>
-	`<!DOCTYPE html><html><head><title>Title</title></head><body>${content}</body></html>`;
-
 export const doc = ({
 	templateId,
 	language,
@@ -20,7 +17,7 @@ export const doc = ({
 }: CreateTemplateContentDoc) => ({
 	templateId,
 	language,
-	content: buildContent(content),
+	content,
 	createdAt: createdAt || new Date(),
 	updatedAt: updatedAt || new Date(),
 });
