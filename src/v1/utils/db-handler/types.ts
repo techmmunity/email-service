@@ -4,9 +4,9 @@ import { DbErrorEnum } from "core/enums/db-error";
 
 export interface DbComplexErrorMessage {
 	table: string;
-	column: string;
-	message: (value: any) => string;
+	columns: Array<string>;
+	message: (values: Array<string>) => string;
 	error: DbErrorEnum;
 	handleWith: keyof typeof ErrorUtil;
-	validate?: (value: any) => boolean | Promise<boolean>;
+	validate?: (value: string) => boolean | Promise<boolean>;
 }
