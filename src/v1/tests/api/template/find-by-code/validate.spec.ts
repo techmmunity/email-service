@@ -1,7 +1,10 @@
 import { FindByCodeParams } from "v1/api/template/service/find-by-code";
+
 import { validate } from "v1/api/template/service/find-by-code/validate";
 
 import { InvalidParamsErrorMessage } from "v1/utils/yup";
+
+import { Limits } from "v1/config/limits";
 
 describe("TemplateService > findByCode > validate", () => {
 	it("should do nothing with valid params", async () => {
@@ -65,12 +68,12 @@ describe("TemplateService > findByCode > validate", () => {
 		});
 	});
 
-	it("should throw an error with invalid code (length < 3)", async () => {
+	it(`should throw an error with invalid code (length < ${Limits.template.code.min})`, async () => {
 		let result;
 
 		try {
 			await validate({
-				code: "fo",
+				code: "".padStart(Limits.template.code.min - 1, "a"),
 			});
 		} catch (e) {
 			result = e;
@@ -78,16 +81,16 @@ describe("TemplateService > findByCode > validate", () => {
 
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
-			errors: ["code must be at least 3 characters"],
+			errors: [`code must be at least ${Limits.template.code.min} characters`],
 		});
 	});
 
-	it("should throw an error with invalid code (length > 25)", async () => {
+	it(`should throw an error with invalid code (length > ${Limits.template.code.max})`, async () => {
 		let result;
 
 		try {
 			await validate({
-				code: "foo.bar.foo.bar.foo.bar.foo.bar.foo.bar.foo.bar",
+				code: "".padStart(Limits.template.code.max + 1, "a"),
 			});
 		} catch (e) {
 			result = e;
@@ -95,7 +98,7 @@ describe("TemplateService > findByCode > validate", () => {
 
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
-			errors: ["code must be at most 25 characters"],
+			errors: [`code must be at most ${Limits.template.code.max} characters`],
 		});
 	});
 });
