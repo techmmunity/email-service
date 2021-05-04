@@ -2,46 +2,52 @@ import { ErrorUtil } from "../error";
 
 import { DbComplexErrorMessage } from "./types";
 
-const getValue = (err: any) =>
-	err.detail
-		.match(/\((.*?)\)/g)
-		?.pop()
-		?.replace("(", "")
-		?.replace(")", "");
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Error = any;
 
-const isCorrectCode = (err: any, handler: DbComplexErrorMessage) =>
+const getValues = (err: Error): Array<string> =>
+	err.detail // Key (application, code)=(UNIQUE_LOGIN_SYSTEM, example) already exists.
+		.match(/\((.*?)\)/g) // ["(application, code)", "(UNIQUE_LOGIN_SYSTEM, example)"]
+		?.pop() // "(UNIQUE_LOGIN_SYSTEM, example)"
+		?.replace("(", "") // "UNIQUE_LOGIN_SYSTEM, example)"
+		?.replace(")", "") // "UNIQUE_LOGIN_SYSTEM, example"
+		?.split(", "); // ["UNIQUE_LOGIN_SYSTEM", "example"]
+
+const isCorrectCode = (err: Error, handler: DbComplexErrorMessage) =>
 	err.code === handler.error;
 
-const isCorrectTable = (err: any, handler: DbComplexErrorMessage) =>
+const isCorrectTable = (err: Error, handler: DbComplexErrorMessage) =>
 	err.table === handler.table;
 
-const isCorrectColumn = (err: any, handler: DbComplexErrorMessage) =>
-	err.detail.includes(handler.column);
+const isCorrectColumns = (err: Error, handler: DbComplexErrorMessage) =>
+	handler.columns.every(column => err.detail.includes(column));
 
-const passesValidation = async (err: any, handler: DbComplexErrorMessage) => {
-	if (!handler.validate) return true;
+const passesValidation = async (err: Error, handler: DbComplexErrorMessage) => {
+	const { validate } = handler;
 
-	const fieldValue = getValue(err);
+	if (!validate) return true;
 
-	if (!fieldValue) return false;
+	const fieldValues = getValues(err);
 
-	return handler.validate(fieldValue);
+	if (fieldValues.length < 1) return false;
+
+	return fieldValues.every(fieldValue => validate(fieldValue));
 };
 
 export const DbHandler = (handlers: Array<DbComplexErrorMessage>) => (
-	err: any,
+	err: Error,
 ) => {
 	const handler = handlers.find(
 		async handler =>
 			isCorrectCode(err, handler) &&
 			isCorrectTable(err, handler) &&
-			isCorrectColumn(err, handler) &&
+			isCorrectColumns(err, handler) &&
 			passesValidation(err, handler),
 	);
 
-	const fieldValue = getValue(err);
+	const fieldValues = getValues(err);
 
 	return handler
-		? ErrorUtil[handler.handleWith]([handler.message(fieldValue)])
+		? ErrorUtil[handler.handleWith]([handler.message(fieldValues)])
 		: ErrorUtil.badGateway([err.message]);
 };
