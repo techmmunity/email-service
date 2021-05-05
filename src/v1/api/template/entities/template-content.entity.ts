@@ -33,6 +33,12 @@ export class TemplateContentEntity extends BaseEntity {
 	public language: LanguageEnum;
 
 	@Column({
+		length: Limits.templateContent.subject.max,
+		nullable: false,
+	})
+	public subject: string;
+
+	@Column({
 		length: Limits.templateContent.content.max,
 		nullable: false,
 	})

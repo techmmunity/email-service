@@ -37,7 +37,8 @@ describe("TemplateService > create", () => {
 		const templateContentDoc = TemplateContentMock.doc({
 			templateId: templateDoc.id,
 			language: LanguageEnum.EN,
-			content: "foo",
+			content: validContent,
+			subject: "foo",
 		});
 
 		TemplateMock.repository.save.mockResolvedValue({
@@ -63,6 +64,7 @@ describe("TemplateService > create", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -102,6 +104,7 @@ describe("TemplateService > create", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
