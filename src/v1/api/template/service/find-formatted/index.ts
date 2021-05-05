@@ -8,6 +8,7 @@ import { validate } from "./validate";
 
 import { TemplateRepository } from "../../entities/template.entity";
 
+import { ApplicationEnum } from "core/enums/applications";
 import { LanguageEnum } from "core/enums/language";
 
 interface Injectables {
@@ -16,6 +17,7 @@ interface Injectables {
 
 export interface FindFormattedParams {
 	code: string;
+	application: ApplicationEnum;
 	language: LanguageEnum;
 }
 
@@ -25,11 +27,12 @@ export const findFormatted = async (
 ) => {
 	await validate(params);
 
-	const { code, language } = params;
+	const { code, application, language } = params;
 
 	const template = await getTemplate({
 		TemplateRepository,
 		code,
+		application,
 	});
 
 	const templateContent = getTemplateContent({
@@ -49,5 +52,6 @@ export const findFormatted = async (
 	return {
 		fields,
 		content: formattedContent,
+		subject: templateContent.subject,
 	};
 };

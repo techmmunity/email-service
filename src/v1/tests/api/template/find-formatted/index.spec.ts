@@ -48,6 +48,7 @@ describe("TemplateService > findFormatted", () => {
 		try {
 			result = await service.findFormatted({
 				code: "example.template",
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			});
 		} catch (e) {
@@ -62,6 +63,7 @@ describe("TemplateService > findFormatted", () => {
 					type: templateFieldDoc.type,
 				},
 			],
+			subject: "foo",
 			content:
 				'<!DOCTYPE html><html><head><title>Title</title></head><body><h1 style="padding: 1px;"></h1></body></html>',
 		});
@@ -75,6 +77,7 @@ describe("TemplateService > findFormatted", () => {
 		try {
 			result = await service.findFormatted({
 				code: "non.existent.template",
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			});
 		} catch (err) {
@@ -111,6 +114,7 @@ describe("TemplateService > findFormatted", () => {
 		try {
 			result = await service.findFormatted({
 				code: "non.existent.template",
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			});
 		} catch (err) {

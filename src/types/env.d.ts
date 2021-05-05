@@ -9,6 +9,10 @@ declare global {
 			POSTGRES_PASSWORD: string;
 			POSTGRES_HOST: string;
 			POSTGRES_DATABSE: string;
+			EMAIL_EMAIL: string;
+			EMAIL_HOST: string;
+			EMAIL_PASSWORD: string;
+			EMAIL_PORT: string;
 		}
 	}
 }
@@ -16,4 +20,4 @@ declare global {
 // If this file has no import/export statements (i.e. is a script)
 // convert it into a module by adding an empty export statement.
 // eslint-disable-next-line prettier/prettier
-export {};
+export { };

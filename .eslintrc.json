@@ -50,7 +50,7 @@
 					"/job/",
 					"/helpers/",
 					"/validate/",
-					"/module/",
+					"/\\.module/",
 					"/controller/",
 					"/\\.entity/",
 					"/utils/",
