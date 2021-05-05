@@ -26,6 +26,7 @@ export interface CreateParams {
 	contents: Array<{
 		language: LanguageEnum;
 		content: string;
+		subject: string;
 	}>;
 }
 
@@ -49,10 +50,11 @@ export const create = async (
 			type,
 			description,
 		})),
-		contents: contents.map(({ language, content }) => ({
+		contents: contents.map(({ language, content, subject }) => ({
 			templateId,
 			language,
 			content,
+			subject,
 		})),
 	}).catch(
 		DbHandler([

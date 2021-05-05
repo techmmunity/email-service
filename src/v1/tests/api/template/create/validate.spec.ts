@@ -35,6 +35,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -108,6 +109,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -141,6 +143,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -175,6 +178,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			} as CreateParams);
@@ -206,6 +210,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -237,6 +242,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -268,6 +274,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -292,6 +299,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			} as CreateParams);
@@ -317,6 +325,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -344,6 +353,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -369,6 +379,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -401,6 +412,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -432,6 +444,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -465,6 +478,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -498,6 +512,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -530,6 +545,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -561,6 +577,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -597,6 +614,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -633,6 +651,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -665,6 +684,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -696,6 +716,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -729,6 +750,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -870,6 +892,7 @@ describe("TemplateService > crerate > validate", () => {
 				contents: [
 					{
 						language: LanguageEnum.EN,
+						subject: "foo",
 					} as any,
 				],
 			});
@@ -901,6 +924,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: 123 as any,
+						subject: "foo",
 					},
 				],
 			});
@@ -934,6 +958,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: "".padStart(Limits.templateContent.content.min - 1, "a"),
+						subject: "foo",
 					},
 				],
 			});
@@ -967,6 +992,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: LanguageEnum.EN,
 						content: "".padStart(Limits.templateContent.content.max + 1, "a"),
+						subject: "foo",
 					},
 				],
 			});
@@ -978,6 +1004,139 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.response).toMatchObject({
 			errors: [
 				`contents[0].content must be at most ${Limits.templateContent.content.max} characters`,
+			],
+		});
+	});
+
+	it("should throw an error without contents[0].subject", async () => {
+		let result;
+
+		try {
+			await validate({
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
+				code: "example.template",
+				fields: [
+					{
+						field: "example",
+						type: TemplateFieldTypeEnum.STRING,
+						description: "foo bar foo bar",
+					},
+				],
+				contents: [
+					{
+						language: LanguageEnum.EN,
+						content: validContent,
+					} as any,
+				],
+			});
+		} catch (e) {
+			result = e;
+		}
+
+		expect(result.status).toBe(400);
+		expect(result.response).toMatchObject({
+			errors: ["contents[0].subject is a required field"],
+		});
+	});
+
+	it("should throw an error with invalid contents[0].subject type", async () => {
+		let result;
+
+		try {
+			await validate({
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
+				code: "example.template",
+				fields: [
+					{
+						field: "example",
+						type: TemplateFieldTypeEnum.STRING,
+						description: "foo bar foo bar",
+					},
+				],
+				contents: [
+					{
+						language: LanguageEnum.EN,
+						content: validContent,
+						subject: 123 as any,
+					},
+				],
+			});
+		} catch (e) {
+			result = e;
+		}
+
+		expect(result.status).toBe(400);
+		expect(result.response).toMatchObject({
+			errors: [
+				"contents[0].subject must be a `string` type, but the final value was: `123`.",
+			],
+		});
+	});
+
+	it(`should throw an error with invalid contents[0].subject (length < ${Limits.templateContent.subject.min})`, async () => {
+		let result;
+
+		try {
+			await validate({
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
+				code: "example.template",
+				fields: [
+					{
+						field: "example",
+						type: TemplateFieldTypeEnum.STRING,
+						description: "foo bar foo bar",
+					},
+				],
+				contents: [
+					{
+						language: LanguageEnum.EN,
+						content: validContent,
+						subject: "".padStart(Limits.templateContent.subject.min - 1, "a"),
+					},
+				],
+			});
+		} catch (e) {
+			result = e;
+		}
+
+		expect(result.status).toBe(400);
+		expect(result.response).toMatchObject({
+			errors: [
+				`contents[0].subject must be at least ${Limits.templateContent.subject.min} characters`,
+			],
+		});
+	});
+
+	it(`should throw an error with invalid contents[0].subject (length > ${Limits.templateContent.subject.max})`, async () => {
+		let result;
+
+		try {
+			await validate({
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
+				code: "example.template",
+				fields: [
+					{
+						field: "example",
+						type: TemplateFieldTypeEnum.STRING,
+						description: "foo bar foo bar",
+					},
+				],
+				contents: [
+					{
+						language: LanguageEnum.EN,
+						content: validContent,
+						subject: "".padStart(Limits.templateContent.subject.max + 1, "a"),
+					},
+				],
+			});
+		} catch (e) {
+			result = e;
+		}
+
+		expect(result.status).toBe(400);
+		expect(result.response).toMatchObject({
+			errors: [
+				`contents[0].subject must be at most ${Limits.templateContent.subject.max} characters`,
 			],
 		});
 	});
@@ -999,6 +1158,7 @@ describe("TemplateService > crerate > validate", () => {
 				contents: [
 					{
 						content: validContent,
+						subject: "foo",
 					} as any,
 				],
 			});
@@ -1030,6 +1190,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: 123 as any,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});
@@ -1063,6 +1224,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						language: "123" as any,
 						content: validContent,
+						subject: "foo",
 					},
 				],
 			});

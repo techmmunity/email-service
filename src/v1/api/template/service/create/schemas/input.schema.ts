@@ -29,7 +29,13 @@ class CreateTemplateFieldsInputSchema {
 
 class CreateTemplateContentsInputSchema {
 	@ApiProperty({
-		description: "Email body, html format, with all HTML tags",
+		description: "Email subject",
+		example: "Verify your account!",
+	})
+	public subject: string;
+
+	@ApiProperty({
+		description: "Email body, html format, with HTML tags",
 		example:
 			"<!DOCTYPE html><html><head><title>Title</title></head><body><h1>Hello Word</h1></body></html>",
 	})
@@ -56,7 +62,7 @@ export class CreateTemplateInputSchema {
 	public code: string;
 
 	@ApiProperty({
-		description: "Template fields (data to be replaced)",
+		description: "Template fields (data to be replaced in body and subject)",
 		type: CreateTemplateFieldsInputSchema,
 		isArray: true,
 	})

@@ -25,5 +25,9 @@ export const Limits = {
 			min: 3,
 			max: 25000,
 		},
+		subject: {
+			min: 3,
+			max: 100,
+		},
 	},
 };

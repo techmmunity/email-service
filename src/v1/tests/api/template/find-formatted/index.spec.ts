@@ -34,6 +34,7 @@ describe("TemplateService > findFormatted", () => {
 			templateId: templateDoc.id,
 			language: LanguageEnum.EN,
 			content: `<!DOCTYPE html><html><head><title>Title</title><style>h1 { padding: 1px; }</style></head><body><h1></h1></body></html>`,
+			subject: "foo",
 		});
 
 		TemplateMock.repository.findOne.mockResolvedValue({

@@ -52,6 +52,12 @@ const schema = yup.object().shape({
 					.required()
 					.min(Limits.templateContent.content.min)
 					.max(Limits.templateContent.content.max),
+				subject: yup
+					.string()
+					.strict()
+					.required()
+					.min(Limits.templateContent.subject.min)
+					.max(Limits.templateContent.subject.max),
 				language: yup.string().strict().required().oneOf(LanguageValues()),
 			}),
 		),
