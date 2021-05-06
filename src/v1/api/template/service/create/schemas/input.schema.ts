@@ -22,6 +22,7 @@ class CreateTemplateFieldsInputSchema {
 
 	@ApiProperty({
 		description: "Field type",
+		type: "enum",
 		enum: TemplateFieldTypeValues(),
 	})
 	public type: TemplateFieldTypeEnum;
@@ -43,6 +44,7 @@ class CreateTemplateContentsInputSchema {
 
 	@ApiProperty({
 		description: "Content language",
+		type: "enum",
 		enum: LanguageValues(),
 	})
 	public language: LanguageEnum;
@@ -51,6 +53,7 @@ class CreateTemplateContentsInputSchema {
 export class CreateTemplateInputSchema {
 	@ApiProperty({
 		description: "Application that the template belongs",
+		type: "enum",
 		enum: ApplicationValues(),
 	})
 	public application: ApplicationEnum;

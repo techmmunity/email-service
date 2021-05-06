@@ -1,4 +1,4 @@
-import { FindFormattedParams } from ".";
+import { SendParams } from ".";
 
 import { ErrorUtil } from "v1/utils/error";
 import { yup } from "v1/utils/yup";
@@ -9,15 +9,18 @@ import { LanguageValues } from "core/enums/language";
 import { Limits } from "v1/config/limits";
 
 const schema = yup.object().shape({
-	code: yup
+	receiverEmail: yup.string().strict().required().email(),
+	// TODO Add valid template code validation
+	templateCode: yup
 		.string()
-		.required()
 		.strict()
+		.required()
 		.min(Limits.template.code.min)
 		.max(Limits.template.code.max),
-	application: yup.string().required().strict().oneOf(ApplicationValues()),
-	language: yup.string().required().strict().oneOf(LanguageValues()),
+	application: yup.string().strict().required().oneOf(ApplicationValues()),
+	language: yup.string().strict().required().oneOf(LanguageValues()),
+	extraData: yup.object().strict().required(),
 });
 
-export const validate = async (params: FindFormattedParams) =>
+export const validate = async (params: SendParams) =>
 	schema.validate(params).catch(err => ErrorUtil.badRequest(err.errors));

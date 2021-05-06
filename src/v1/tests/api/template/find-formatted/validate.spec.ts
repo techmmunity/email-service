@@ -4,6 +4,7 @@ import { validate } from "v1/api/template/service/find-formatted/validate";
 
 import { InvalidParamsErrorMessage } from "v1/utils/yup";
 
+import { ApplicationEnum, ApplicationValues } from "core/enums/applications";
 import { LanguageEnum, LanguageValues } from "core/enums/language";
 
 import { Limits } from "v1/config/limits";
@@ -15,6 +16,7 @@ describe("TemplateService > findFormatted > validate", () => {
 		try {
 			await validate({
 				code: "example.code",
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			});
 		} catch (e) {
@@ -44,6 +46,7 @@ describe("TemplateService > findFormatted > validate", () => {
 
 		try {
 			await validate({
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			} as FindFormattedParams);
 		} catch (e) {
@@ -62,6 +65,7 @@ describe("TemplateService > findFormatted > validate", () => {
 		try {
 			await validate({
 				code: 123 as any,
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			});
 		} catch (e) {
@@ -80,6 +84,7 @@ describe("TemplateService > findFormatted > validate", () => {
 		try {
 			await validate({
 				code: "".padStart(Limits.template.code.min - 1, "a"),
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			});
 		} catch (e) {
@@ -98,6 +103,7 @@ describe("TemplateService > findFormatted > validate", () => {
 		try {
 			await validate({
 				code: "".padStart(Limits.template.code.max + 1, "a"),
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			});
 		} catch (e) {
@@ -116,6 +122,7 @@ describe("TemplateService > findFormatted > validate", () => {
 		try {
 			await validate({
 				code: "example.code",
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 			} as FindFormattedParams);
 		} catch (e) {
 			result = e;
@@ -133,6 +140,7 @@ describe("TemplateService > findFormatted > validate", () => {
 		try {
 			await validate({
 				code: "example.code",
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: 123 as any,
 			});
 		} catch (e) {
@@ -153,6 +161,7 @@ describe("TemplateService > findFormatted > validate", () => {
 		try {
 			await validate({
 				code: "example.code",
+				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: "123" as any,
 			});
 		} catch (e) {
@@ -163,6 +172,68 @@ describe("TemplateService > findFormatted > validate", () => {
 		expect(result.response).toMatchObject({
 			errors: [
 				`language must be one of the following values: ${LanguageValues().join(
+					", ",
+				)}`,
+			],
+		});
+	});
+
+	it("should throw an error without application", async () => {
+		let result;
+
+		try {
+			await validate({
+				code: "example.code",
+				language: LanguageEnum.EN,
+			} as FindFormattedParams);
+		} catch (e) {
+			result = e;
+		}
+
+		expect(result.status).toBe(400);
+		expect(result.response).toMatchObject({
+			errors: ["application is a required field"],
+		});
+	});
+
+	it("should throw an error with invalid application type", async () => {
+		let result;
+
+		try {
+			await validate({
+				code: "example.code",
+				application: 123 as any,
+				language: LanguageEnum.EN,
+			});
+		} catch (e) {
+			result = e;
+		}
+
+		expect(result.status).toBe(400);
+		expect(result.response).toMatchObject({
+			errors: [
+				"application must be a `string` type, but the final value was: `123`.",
+			],
+		});
+	});
+
+	it("should throw an error with invalid application", async () => {
+		let result;
+
+		try {
+			await validate({
+				code: "example.code",
+				language: LanguageEnum.EN,
+				application: "123" as any,
+			});
+		} catch (e) {
+			result = e;
+		}
+
+		expect(result.status).toBe(400);
+		expect(result.response).toMatchObject({
+			errors: [
+				`application must be one of the following values: ${ApplicationValues().join(
 					", ",
 				)}`,
 			],

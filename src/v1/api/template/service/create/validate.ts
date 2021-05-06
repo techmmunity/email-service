@@ -10,6 +10,7 @@ import { TemplateFieldTypeValues } from "core/enums/template-field-type";
 import { Limits } from "v1/config/limits";
 
 const schema = yup.object().shape({
+	// TODO Add valid template code validation
 	code: yup
 		.string()
 		.required()
@@ -46,6 +47,7 @@ const schema = yup.object().shape({
 		.min(1)
 		.of(
 			yup.object().shape({
+				// TODO Add HTML validation
 				content: yup
 					.string()
 					.strict()
