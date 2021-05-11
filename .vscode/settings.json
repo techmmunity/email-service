@@ -37,9 +37,6 @@
 	"typescript.updateImportsOnFileMove.enabled": "always",
 	"typescript.tsserver.log": "verbose",
 	"typescript.suggest.autoImports": true,
-	"[typescript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
-	},
 	// JavaScript
 	"javascript.updateImportsOnFileMove.enabled": "always",
 	"javascript.suggest.autoImports": true,
