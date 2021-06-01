@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, HttpCode } from "@nestjs/common";
 import {
 	ApiBadRequestResponse,
 	ApiNotFoundResponse,
@@ -13,7 +13,7 @@ import { SendEmailNotFoundSchema } from "./service/send/schemas/not-found.schema
 
 import { ApiConfig } from "v1/config";
 
-@ApiTags(`${ApiConfig.version} - email`)
+@ApiTags(`${ApiConfig.version} - Email`)
 @Controller(`${ApiConfig.version}/email`)
 export class EmailController {
 	public constructor(private readonly EmailService: EmailService) {
