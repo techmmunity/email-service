@@ -10,7 +10,7 @@ import { ApiHealthIndicator } from "./health.indicator";
 
 import { ApiConfig } from "v1/config";
 
-@ApiTags("Health")
+@ApiTags(`${ApiConfig.version} - Health`)
 @Controller(`${ApiConfig.version}/health`)
 export class HealthController {
 	public constructor(

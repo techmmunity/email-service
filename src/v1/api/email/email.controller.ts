@@ -1,5 +1,9 @@
-import { Body, Controller, HttpCode, Post } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiNotFoundResponse } from "@nestjs/swagger";
+import { Body, Controller, Post, HttpCode } from "@nestjs/common";
+import {
+	ApiBadRequestResponse,
+	ApiNotFoundResponse,
+	ApiTags,
+} from "@nestjs/swagger";
 
 import { EmailService } from "./email.service";
 
@@ -9,6 +13,7 @@ import { SendEmailNotFoundSchema } from "./service/send/schemas/not-found.schema
 
 import { ApiConfig } from "v1/config";
 
+@ApiTags(`${ApiConfig.version} - Email`)
 @Controller(`${ApiConfig.version}/email`)
 export class EmailController {
 	public constructor(private readonly EmailService: EmailService) {
