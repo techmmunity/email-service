@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { ApiBadRequestResponse, ApiNotFoundResponse } from "@nestjs/swagger";
 
 import { EmailService } from "./email.service";
@@ -16,6 +16,7 @@ export class EmailController {
 	}
 
 	@Post()
+	@HttpCode(204)
 	@ApiNotFoundResponse({
 		type: SendEmailNotFoundSchema,
 	})
