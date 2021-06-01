@@ -21,6 +21,7 @@ export class EmailController {
 	}
 
 	@Post()
+	@HttpCode(204)
 	@ApiNotFoundResponse({
 		type: SendEmailNotFoundSchema,
 	})
