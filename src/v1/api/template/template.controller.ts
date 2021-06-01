@@ -15,7 +15,11 @@ import { CreateTemplateOutputSchema } from "./service/create/schemas/output.sche
 
 import { ApiConfig } from "v1/config";
 
+<<<<<<< HEAD
 @ApiTags(`${ApiConfig.version} - Template`)
+=======
+@ApiTags(`${ApiConfig.version} - template`)
+>>>>>>> 1010b2a46a34eeb5fb1e3777dda01bfe8fe62c89
 @Controller(`${ApiConfig.version}/template`)
 export class TemplateController {
 	public constructor(private readonly TemplateService: TemplateService) {
