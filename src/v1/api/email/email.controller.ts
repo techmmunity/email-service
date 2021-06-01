@@ -9,7 +9,7 @@ import { SendEmailNotFoundSchema } from "./service/send/schemas/not-found.schema
 
 import { ApiConfig } from "v1/config";
 
-@Controller(`${ApiConfig.version}/email`)
+@Controller(`${ApiConfig.version} - email`)
 export class EmailController {
 	public constructor(private readonly EmailService: EmailService) {
 		//
