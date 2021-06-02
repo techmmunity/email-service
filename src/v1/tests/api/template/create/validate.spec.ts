@@ -50,7 +50,7 @@ describe("TemplateService > crerate > validate", () => {
 		let result;
 
 		try {
-			await validate(("" as unknown) as CreateParams);
+			await validate("" as unknown as CreateParams);
 		} catch (e) {
 			result = e;
 		}

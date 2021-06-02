@@ -1,13 +1,13 @@
+import { HttpCodeEnum, PgErrorEnum } from "@techmmunity/database-error-handler";
 import { v4 } from "uuid";
 
 import { validate } from "./validate";
 
 import { TemplateRepository } from "../../entities/template.entity";
 
-import { DbHandler } from "v1/utils/db-handler";
+import { dbHandler } from "v1/utils/db-handler";
 
 import { ApplicationEnum } from "core/enums/applications";
-import { DbErrorEnum } from "core/enums/db-error";
 import { LanguageEnum } from "core/enums/language";
 import { TemplateFieldTypeEnum } from "core/enums/template-field-type";
 
@@ -57,14 +57,17 @@ export const create = async (
 			subject,
 		})),
 	}).catch(
-		DbHandler([
+		dbHandler([
 			{
-				error: DbErrorEnum.UniqueViolation,
+				error: PgErrorEnum.UniqueViolation,
 				table: "templates",
 				columns: ["application", "code"],
-				handleWith: "conflict",
-				message: ([application, code]) =>
-					`Template with code "${code}" already exists for application "${application}"`,
+				responseCode: HttpCodeEnum.Conflict,
+				makeError: ({ application, code }) => ({
+					errors: [
+						`Template with code "${code}" already exists for application "${application}"`,
+					],
+				}),
 			},
 		]),
 	);

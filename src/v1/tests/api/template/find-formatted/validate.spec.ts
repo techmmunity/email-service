@@ -30,7 +30,7 @@ describe("TemplateService > findFormatted > validate", () => {
 		let result;
 
 		try {
-			await validate(("" as unknown) as FindFormattedParams);
+			await validate("" as unknown as FindFormattedParams);
 		} catch (e) {
 			result = e;
 		}
