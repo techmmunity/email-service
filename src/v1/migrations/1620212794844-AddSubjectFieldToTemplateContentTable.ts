@@ -1,7 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AddSubjectFieldToTemplateContentTable1620212794844
-	implements MigrationInterface {
+	implements MigrationInterface
+{
 	public name = "AddSubjectFieldToTemplateContentTable1620212794844";
 
 	public async up(queryRunner: QueryRunner): Promise<void> {

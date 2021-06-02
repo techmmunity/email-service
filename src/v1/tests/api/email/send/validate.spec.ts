@@ -55,7 +55,7 @@ describe("EmailService > send > validate", () => {
 		let result;
 
 		try {
-			await validate(("" as unknown) as SendParams);
+			await validate("" as unknown as SendParams);
 		} catch (e) {
 			result = e;
 		}

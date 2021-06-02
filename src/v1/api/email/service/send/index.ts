@@ -29,13 +29,8 @@ export const send = async (
 ) => {
 	await validate(params);
 
-	const {
-		templateCode,
-		application,
-		language,
-		receiverEmail,
-		extraData,
-	} = params;
+	const { templateCode, application, language, receiverEmail, extraData } =
+		params;
 
 	const template = await TemplateService.findFormatted({
 		code: templateCode,

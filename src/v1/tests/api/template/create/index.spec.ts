@@ -1,7 +1,8 @@
+import { PgErrorEnum } from "@techmmunity/database-error-handler";
+
 import { TemplateService } from "v1/api/template/template.service";
 
 import { ApplicationEnum } from "core/enums/applications";
-import { DbErrorEnum } from "core/enums/db-error";
 import { LanguageEnum } from "core/enums/language";
 import { TemplateFieldTypeEnum } from "core/enums/template-field-type";
 
@@ -82,7 +83,7 @@ describe("TemplateService > create", () => {
 
 	it("should throw error if template with the same code and application already exists", async () => {
 		TemplateMock.repository.save.mockRejectedValue({
-			code: DbErrorEnum.UniqueViolation,
+			code: PgErrorEnum.UniqueViolation,
 			detail: `Key (application, code)=(${ApplicationEnum.UNIQUE_LOGIN_SYSTEM}, example.template) already exists.`,
 			table: "templates",
 		});

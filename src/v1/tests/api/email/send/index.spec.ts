@@ -68,8 +68,7 @@ describe("EmailService > create", () => {
 		expect(EmailMock.mailerService.sendMail).toBeCalledWith({
 			subject: "foo",
 			to: receiverEmail,
-			html:
-				'<!DOCTYPE html><html><head><title>Title</title></head><body><h1 style="padding: 1px;">Renato Razal</h1></body></html>',
+			html: '<!DOCTYPE html><html><head><title>Title</title></head><body><h1 style="padding: 1px;">Renato Razal</h1></body></html>',
 		});
 	});
 
@@ -110,8 +109,7 @@ describe("EmailService > create", () => {
 		expect(EmailMock.mailerService.sendMail).toBeCalledWith({
 			subject: "foo",
 			to: receiverEmail,
-			html:
-				'<!DOCTYPE html><html><head><title>Title</title></head><body><h1 style="padding: 1px;">Hello World</h1></body></html>',
+			html: '<!DOCTYPE html><html><head><title>Title</title></head><body><h1 style="padding: 1px;">Hello World</h1></body></html>',
 		});
 	});
 
