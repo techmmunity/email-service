@@ -13,6 +13,4 @@ import { TemplateEntity } from "./entities/template.entity";
 	controllers: [TemplateController],
 	exports: [TemplateService],
 })
-export class TemplateModule {
-	//
-}
+export class TemplateModule {}

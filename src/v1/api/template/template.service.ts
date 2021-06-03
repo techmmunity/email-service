@@ -11,16 +11,14 @@ import { TemplateEntity, TemplateRepository } from "./entities/template.entity";
 export class TemplateService {
 	public constructor(
 		@InjectRepository(TemplateEntity)
-		private readonly TemplateRepository: TemplateRepository,
-	) {
-		//
-	}
+		private readonly templateRepository: TemplateRepository,
+	) {}
 
 	@Transactional()
 	public create(params: CreateParams) {
 		return create(
 			{
-				TemplateRepository: this.TemplateRepository,
+				templateRepository: this.templateRepository,
 			},
 			params,
 		);
@@ -30,7 +28,7 @@ export class TemplateService {
 	public findFormatted(params: FindFormattedParams) {
 		return findFormatted(
 			{
-				TemplateRepository: this.TemplateRepository,
+				templateRepository: this.templateRepository,
 			},
 			params,
 		);

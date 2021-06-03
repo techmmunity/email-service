@@ -5,7 +5,7 @@ import { service } from "./service";
 
 const repository = makeMockRepository();
 
-export const TemplateMock = {
+export const templateMock = {
 	doc,
 	repository,
 	service: service(repository),

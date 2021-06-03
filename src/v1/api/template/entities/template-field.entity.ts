@@ -19,7 +19,7 @@ import {
 	TemplateFieldTypeValues,
 } from "core/enums/template-field-type";
 
-import { Limits } from "v1/config/limits";
+import { LIMITS } from "v1/config/limits";
 
 import { DefaultOmitEntityFields } from "types/entity";
 
@@ -31,7 +31,7 @@ export class TemplateFieldEntity extends BaseEntity {
 	public templateId: string;
 
 	@PrimaryColumn({
-		length: Limits.templateField.field.max,
+		length: LIMITS.templateField.field.max,
 	})
 	public field: string;
 
@@ -42,7 +42,7 @@ export class TemplateFieldEntity extends BaseEntity {
 	public type: TemplateFieldTypeEnum;
 
 	@Column({
-		length: Limits.templateField.description.max,
+		length: LIMITS.templateField.description.max,
 		nullable: false,
 	})
 	public description: string;

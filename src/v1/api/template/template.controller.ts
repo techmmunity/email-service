@@ -13,14 +13,12 @@ import { CreateTemplateConflictSchema } from "./service/create/schemas/conflict.
 import { CreateTemplateInputSchema } from "./service/create/schemas/input.schema";
 import { CreateTemplateOutputSchema } from "./service/create/schemas/output.schema";
 
-import { ApiConfig } from "v1/config";
+import { CONFIG } from "v1/config";
 
-@ApiTags(`${ApiConfig.version} - Template`)
-@Controller(`${ApiConfig.version}/template`)
+@ApiTags(`${CONFIG.version} - Template`)
+@Controller(`${CONFIG.version}/template`)
 export class TemplateController {
-	public constructor(private readonly TemplateService: TemplateService) {
-		//
-	}
+	public constructor(private readonly templateService: TemplateService) {}
 
 	@Post()
 	@ApiCreatedResponse({
@@ -33,6 +31,6 @@ export class TemplateController {
 		type: CreateTemplateConflictSchema,
 	})
 	public create(@Body() params: CreateTemplateInputSchema) {
-		return this.TemplateService.create(params);
+		return this.templateService.create(params);
 	}
 }

@@ -2,7 +2,7 @@ import { CreateParams } from "v1/api/template/service/create";
 
 import { validate } from "v1/api/template/service/create/validate";
 
-import { InvalidParamsErrorMessage } from "v1/utils/yup";
+import { invalidParamsErrorMessage } from "v1/utils/yup";
 
 import { ApplicationEnum, ApplicationValues } from "core/enums/applications";
 import { LanguageEnum, LanguageValues } from "core/enums/language";
@@ -11,9 +11,11 @@ import {
 	TemplateFieldTypeValues,
 } from "core/enums/template-field-type";
 
-import { Limits } from "v1/config/limits";
+import { LIMITS } from "v1/config/limits";
 
 describe("TemplateService > crerate > validate", () => {
+	const code = "example.template";
+	const description = "foo bar foo bar";
 	const validContent =
 		"<!DOCTYPE html><html><head><title>Title</title></head><body><h1>Hello Word</h1></body></html>";
 
@@ -23,12 +25,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -57,7 +59,7 @@ describe("TemplateService > crerate > validate", () => {
 
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
-			errors: [InvalidParamsErrorMessage],
+			errors: [invalidParamsErrorMessage],
 		});
 	});
 
@@ -66,12 +68,12 @@ describe("TemplateService > crerate > validate", () => {
 
 		try {
 			await validate({
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -97,12 +99,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: 123 as any,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -131,12 +133,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: "123" as any,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -171,7 +173,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -203,7 +205,7 @@ describe("TemplateService > crerate > validate", () => {
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -224,18 +226,18 @@ describe("TemplateService > crerate > validate", () => {
 		});
 	});
 
-	it(`should throw an error with invalid code (length < ${Limits.template.code.min})`, async () => {
+	it(`should throw an error with invalid code (length < ${LIMITS.template.code.min})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "".padStart(Limits.template.code.min - 1, "a"),
+				code: "".padStart(LIMITS.template.code.min - 1, "a"),
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -252,22 +254,22 @@ describe("TemplateService > crerate > validate", () => {
 
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
-			errors: [`code must be at least ${Limits.template.code.min} characters`],
+			errors: [`code must be at least ${LIMITS.template.code.min} characters`],
 		});
 	});
 
-	it(`should throw an error with invalid code (length > ${Limits.template.code.max})`, async () => {
+	it(`should throw an error with invalid code (length > ${LIMITS.template.code.max})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "".padStart(Limits.template.code.max + 1, "a"),
+				code: "".padStart(LIMITS.template.code.max + 1, "a"),
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -284,7 +286,7 @@ describe("TemplateService > crerate > validate", () => {
 
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
-			errors: [`code must be at most ${Limits.template.code.max} characters`],
+			errors: [`code must be at most ${LIMITS.template.code.max} characters`],
 		});
 	});
 
@@ -294,7 +296,7 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				contents: [
 					{
 						language: LanguageEnum.EN,
@@ -319,7 +321,7 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: 123 as any,
 				contents: [
 					{
@@ -347,7 +349,7 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [],
 				contents: [
 					{
@@ -373,7 +375,7 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [123 as any],
 				contents: [
 					{
@@ -401,11 +403,11 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					} as any,
 				],
 				contents: [
@@ -432,12 +434,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: 123 as any,
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -460,18 +462,18 @@ describe("TemplateService > crerate > validate", () => {
 		});
 	});
 
-	it(`should throw an error with invalid fields[0].field (length < ${Limits.templateField.field.min})`, async () => {
+	it(`should throw an error with invalid fields[0].field (length < ${LIMITS.templateField.field.min})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
-						field: "".padStart(Limits.templateField.field.min - 1, "a"),
+						field: "".padStart(LIMITS.templateField.field.min - 1, "a"),
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -489,23 +491,23 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`fields[0].field must be at least ${Limits.templateField.field.min} characters`,
+				`fields[0].field must be at least ${LIMITS.templateField.field.min} characters`,
 			],
 		});
 	});
 
-	it(`should throw an error with invalid fields[0].field (length > ${Limits.templateField.field.max})`, async () => {
+	it(`should throw an error with invalid fields[0].field (length > ${LIMITS.templateField.field.max})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
-						field: "".padStart(Limits.templateField.field.max + 1, "a"),
+						field: "".padStart(LIMITS.templateField.field.max + 1, "a"),
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -523,7 +525,7 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`fields[0].field must be at most ${Limits.templateField.field.max} characters`,
+				`fields[0].field must be at most ${LIMITS.templateField.field.max} characters`,
 			],
 		});
 	});
@@ -534,7 +536,7 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
@@ -565,7 +567,7 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
@@ -593,19 +595,19 @@ describe("TemplateService > crerate > validate", () => {
 		});
 	});
 
-	it(`should throw an error with invalid fields[0].description (length < ${Limits.templateField.description.min})`, async () => {
+	it(`should throw an error with invalid fields[0].description (length < ${LIMITS.templateField.description.min})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
 						description: "".padStart(
-							Limits.templateField.description.min - 1,
+							LIMITS.templateField.description.min - 1,
 							"a",
 						),
 					},
@@ -625,24 +627,24 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`fields[0].description must be at least ${Limits.templateField.description.min} characters`,
+				`fields[0].description must be at least ${LIMITS.templateField.description.min} characters`,
 			],
 		});
 	});
 
-	it(`should throw an error with invalid fields[0].description (length > ${Limits.templateField.description.max})`, async () => {
+	it(`should throw an error with invalid fields[0].description (length > ${LIMITS.templateField.description.max})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
 						description: "".padStart(
-							Limits.templateField.description.max + 1,
+							LIMITS.templateField.description.max + 1,
 							"a",
 						),
 					},
@@ -662,7 +664,7 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`fields[0].description must be at most ${Limits.templateField.description.max} characters`,
+				`fields[0].description must be at most ${LIMITS.templateField.description.max} characters`,
 			],
 		});
 	});
@@ -673,11 +675,11 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
-						description: "foo bar foo bar",
+						description,
 					} as any,
 				],
 				contents: [
@@ -704,12 +706,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: 123 as any,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -738,12 +740,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: "123" as any,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -774,12 +776,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 			} as CreateParams);
@@ -799,12 +801,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: 123 as any,
@@ -827,12 +829,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [],
@@ -853,12 +855,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [123 as any],
@@ -881,12 +883,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -912,12 +914,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -940,24 +942,24 @@ describe("TemplateService > crerate > validate", () => {
 		});
 	});
 
-	it(`should throw an error with invalid contents[0].content (length < ${Limits.templateContent.content.min})`, async () => {
+	it(`should throw an error with invalid contents[0].content (length < ${LIMITS.templateContent.content.min})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
 					{
 						language: LanguageEnum.EN,
-						content: "".padStart(Limits.templateContent.content.min - 1, "a"),
+						content: "".padStart(LIMITS.templateContent.content.min - 1, "a"),
 						subject: "foo",
 					},
 				],
@@ -969,29 +971,29 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`contents[0].content must be at least ${Limits.templateContent.content.min} characters`,
+				`contents[0].content must be at least ${LIMITS.templateContent.content.min} characters`,
 			],
 		});
 	});
 
-	it(`should throw an error with invalid contents[0].content (length > ${Limits.templateContent.content.max})`, async () => {
+	it(`should throw an error with invalid contents[0].content (length > ${LIMITS.templateContent.content.max})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
 					{
 						language: LanguageEnum.EN,
-						content: "".padStart(Limits.templateContent.content.max + 1, "a"),
+						content: "".padStart(LIMITS.templateContent.content.max + 1, "a"),
 						subject: "foo",
 					},
 				],
@@ -1003,7 +1005,7 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`contents[0].content must be at most ${Limits.templateContent.content.max} characters`,
+				`contents[0].content must be at most ${LIMITS.templateContent.content.max} characters`,
 			],
 		});
 	});
@@ -1014,12 +1016,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -1045,12 +1047,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -1073,25 +1075,25 @@ describe("TemplateService > crerate > validate", () => {
 		});
 	});
 
-	it(`should throw an error with invalid contents[0].subject (length < ${Limits.templateContent.subject.min})`, async () => {
+	it(`should throw an error with invalid contents[0].subject (length < ${LIMITS.templateContent.subject.min})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
-						subject: "".padStart(Limits.templateContent.subject.min - 1, "a"),
+						subject: "".padStart(LIMITS.templateContent.subject.min - 1, "a"),
 					},
 				],
 			});
@@ -1102,30 +1104,30 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`contents[0].subject must be at least ${Limits.templateContent.subject.min} characters`,
+				`contents[0].subject must be at least ${LIMITS.templateContent.subject.min} characters`,
 			],
 		});
 	});
 
-	it(`should throw an error with invalid contents[0].subject (length > ${Limits.templateContent.subject.max})`, async () => {
+	it(`should throw an error with invalid contents[0].subject (length > ${LIMITS.templateContent.subject.max})`, async () => {
 		let result;
 
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
 					{
 						language: LanguageEnum.EN,
 						content: validContent,
-						subject: "".padStart(Limits.templateContent.subject.max + 1, "a"),
+						subject: "".padStart(LIMITS.templateContent.subject.max + 1, "a"),
 					},
 				],
 			});
@@ -1136,7 +1138,7 @@ describe("TemplateService > crerate > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`contents[0].subject must be at most ${Limits.templateContent.subject.max} characters`,
+				`contents[0].subject must be at most ${LIMITS.templateContent.subject.max} characters`,
 			],
 		});
 	});
@@ -1147,12 +1149,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -1178,12 +1180,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [
@@ -1212,12 +1214,12 @@ describe("TemplateService > crerate > validate", () => {
 		try {
 			await validate({
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-				code: "example.template",
+				code,
 				fields: [
 					{
 						field: "example",
 						type: TemplateFieldTypeEnum.STRING,
-						description: "foo bar foo bar",
+						description,
 					},
 				],
 				contents: [

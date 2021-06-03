@@ -18,7 +18,7 @@ import { TemplateFieldEntity } from "./template-field.entity";
 
 import { ApplicationEnum, ApplicationValues } from "core/enums/applications";
 
-import { Limits } from "v1/config/limits";
+import { LIMITS } from "v1/config/limits";
 
 import { DefaultOmitEntityFields } from "types/entity";
 
@@ -26,7 +26,7 @@ import { DefaultOmitEntityFields } from "types/entity";
 @Unique(["application", "code"])
 export class TemplateEntity extends BaseEntity {
 	@PrimaryColumn({
-		length: Limits.ids.uuid.length,
+		length: LIMITS.ids.uuid.length,
 	})
 	public id: string;
 
@@ -38,7 +38,7 @@ export class TemplateEntity extends BaseEntity {
 
 	@Index()
 	@Column({
-		length: Limits.template.code.max,
+		length: LIMITS.template.code.max,
 		nullable: false,
 	})
 	public code: string;
@@ -76,7 +76,7 @@ export class TemplateEntity extends BaseEntity {
 
 export type TemplateType = Omit<
 	TemplateEntity,
-	DefaultOmitEntityFields | "fields" | "contents"
+	DefaultOmitEntityFields | "contents" | "fields"
 >;
 
 export type TemplateRepository = Repository<TemplateEntity>;

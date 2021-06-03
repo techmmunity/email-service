@@ -4,15 +4,17 @@ import { ApplicationEnum } from "core/enums/applications";
 import { LanguageEnum } from "core/enums/language";
 import { TemplateFieldTypeEnum } from "core/enums/template-field-type";
 
-import { TemplateMock } from "v1/tests/mocks/template";
-import { TemplateContentMock } from "v1/tests/mocks/template-content";
-import { TemplateFieldMock } from "v1/tests/mocks/template-field";
+import { templateMock } from "v1/tests/mocks/template";
+import { templateContentMock } from "v1/tests/mocks/template-content";
+import { templateFieldMock } from "v1/tests/mocks/template-field";
 
 describe("TemplateService > findFormatted", () => {
 	let service: TemplateService;
 
+	const code = "example.template";
+
 	beforeAll(async () => {
-		service = await TemplateMock.service();
+		service = await templateMock.service();
 	});
 
 	it("should be defined", () => {
@@ -20,24 +22,25 @@ describe("TemplateService > findFormatted", () => {
 	});
 
 	it("should find template with valid params", async () => {
-		const templateDoc = TemplateMock.doc({
+		const templateDoc = templateMock.doc({
 			application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-			code: "example.template",
+			code,
 		});
-		const templateFieldDoc = TemplateFieldMock.doc({
+		const templateFieldDoc = templateFieldMock.doc({
 			templateId: templateDoc.id,
 			field: "example",
 			type: TemplateFieldTypeEnum.STRING,
-			descripion: "foo bar foo bar",
+			description: "foo bar foo bar",
 		});
-		const templateContentDoc = TemplateContentMock.doc({
+		const templateContentDoc = templateContentMock.doc({
 			templateId: templateDoc.id,
 			language: LanguageEnum.EN,
-			content: `<!DOCTYPE html><html><head><title>Title</title><style>h1 { padding: 1px; }</style></head><body><h1></h1></body></html>`,
+			content:
+				"<!DOCTYPE html><html><head><title>Title</title><style>h1 { padding: 1px; }</style></head><body><h1></h1></body></html>",
 			subject: "foo",
 		});
 
-		TemplateMock.repository.findOne.mockResolvedValue({
+		templateMock.repository.findOne.mockResolvedValue({
 			...templateDoc,
 			fields: [templateFieldDoc],
 			contents: [templateContentDoc],
@@ -47,7 +50,7 @@ describe("TemplateService > findFormatted", () => {
 
 		try {
 			result = await service.findFormatted({
-				code: "example.template",
+				code,
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 			});
@@ -55,7 +58,7 @@ describe("TemplateService > findFormatted", () => {
 			result = e;
 		}
 
-		expect(TemplateMock.repository.findOne).toBeCalledTimes(1);
+		expect(templateMock.repository.findOne).toBeCalledTimes(1);
 		expect(result).toStrictEqual({
 			fields: [
 				{
@@ -70,7 +73,7 @@ describe("TemplateService > findFormatted", () => {
 	});
 
 	it("should throw error if template not exists", async () => {
-		TemplateMock.repository.findOne.mockResolvedValue(undefined);
+		templateMock.repository.findOne.mockResolvedValue(undefined);
 
 		let result;
 
@@ -84,7 +87,7 @@ describe("TemplateService > findFormatted", () => {
 			result = err;
 		}
 
-		expect(TemplateMock.repository.findOne).toBeCalledTimes(1);
+		expect(templateMock.repository.findOne).toBeCalledTimes(1);
 		expect(result.status).toBe(404);
 		expect(result.response).toStrictEqual({
 			errors: ["Template not found"],
@@ -92,18 +95,18 @@ describe("TemplateService > findFormatted", () => {
 	});
 
 	it("should throw error if content with selected language not exists", async () => {
-		const templateDoc = TemplateMock.doc({
+		const templateDoc = templateMock.doc({
 			application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
-			code: "example.template",
+			code,
 		});
-		const templateFieldDoc = TemplateFieldMock.doc({
+		const templateFieldDoc = templateFieldMock.doc({
 			templateId: templateDoc.id,
 			field: "example",
 			type: TemplateFieldTypeEnum.STRING,
-			descripion: "foo bar foo bar",
+			description: "foo bar foo bar",
 		});
 
-		TemplateMock.repository.findOne.mockResolvedValue({
+		templateMock.repository.findOne.mockResolvedValue({
 			...templateDoc,
 			fields: [templateFieldDoc],
 			contents: [],
@@ -121,7 +124,7 @@ describe("TemplateService > findFormatted", () => {
 			result = err;
 		}
 
-		expect(TemplateMock.repository.findOne).toBeCalledTimes(1);
+		expect(templateMock.repository.findOne).toBeCalledTimes(1);
 		expect(result.status).toBe(404);
 		expect(result.response).toStrictEqual({
 			errors: [`Template content with language "${LanguageEnum.EN}" not found`],

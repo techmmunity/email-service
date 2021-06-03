@@ -1,21 +1,21 @@
 import { TemplateRepository } from "v1/api/template/entities/template.entity";
 
-import { ErrorUtil } from "v1/utils/error";
+import { errorUtil } from "v1/utils/error";
 
 import { ApplicationEnum } from "core/enums/applications";
 
 interface GetTemplateParams {
-	TemplateRepository: TemplateRepository;
+	templateRepository: TemplateRepository;
 	code: string;
 	application: ApplicationEnum;
 }
 
 export const getTemplate = async ({
-	TemplateRepository,
+	templateRepository,
 	code,
 	application,
 }: GetTemplateParams) => {
-	const template = await TemplateRepository.findOne({
+	const template = await templateRepository.findOne({
 		where: {
 			code,
 			application,
@@ -24,7 +24,7 @@ export const getTemplate = async ({
 	});
 
 	if (!template) {
-		return ErrorUtil.notFound(["Template not found"]);
+		return errorUtil.notFound(["Template not found"]);
 	}
 
 	return template;

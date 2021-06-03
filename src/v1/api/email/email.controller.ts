@@ -11,14 +11,12 @@ import { SendEmailBadRequestSchema } from "./service/send/schemas/bad-request.sc
 import { SendEmailInputSchema } from "./service/send/schemas/input.schema";
 import { SendEmailNotFoundSchema } from "./service/send/schemas/not-found.schema";
 
-import { ApiConfig } from "v1/config";
+import { CONFIG } from "v1/config";
 
-@ApiTags(`${ApiConfig.version} - Email`)
-@Controller(`${ApiConfig.version}/email`)
+@ApiTags(`${CONFIG.version} - Email`)
+@Controller(`${CONFIG.version}/email`)
 export class EmailController {
-	public constructor(private readonly EmailService: EmailService) {
-		//
-	}
+	public constructor(private readonly emailService: EmailService) {}
 
 	@Post()
 	@HttpCode(204)
@@ -32,6 +30,6 @@ export class EmailController {
 		type: SendEmailNotFoundSchema,
 	})
 	public send(@Body() params: SendEmailInputSchema) {
-		return this.EmailService.send(params);
+		return this.emailService.send(params);
 	}
 }

@@ -1,14 +1,12 @@
 import { Module } from "@nestjs/common";
 
-import { Api } from "./api";
+import { API } from "./api";
 
 import { EmailModule } from "./api/email/email.module";
 
-import { PostgresConnect } from "v1/config/postgres";
+import { POSTGRES_CONNECT } from "v1/config/postgres";
 
 @Module({
-	imports: [PostgresConnect, ...Api, EmailModule],
+	imports: [POSTGRES_CONNECT, ...API, EmailModule],
 })
-export class V1Module {
-	//
-}
+export class V1Module {}

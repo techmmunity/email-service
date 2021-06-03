@@ -2,16 +2,17 @@ import { SendParams } from "v1/api/email/service/send";
 
 import { validate } from "v1/api/email/service/send/validate";
 
-import { InvalidParamsErrorMessage } from "v1/utils/yup";
+import { invalidParamsErrorMessage } from "v1/utils/yup";
 
 import { ApplicationEnum, ApplicationValues } from "core/enums/applications";
 import { LanguageEnum, LanguageValues } from "core/enums/language";
 
-import { Limits } from "v1/config/limits";
+import { LIMITS } from "v1/config/limits";
 
 describe("EmailService > send > validate", () => {
 	const receiverEmail = "foo@bar.com";
 	const templateCode = "example.template";
+	const userName = "Renato Razal";
 
 	it("should do nothing with valid params", async () => {
 		let result;
@@ -23,7 +24,7 @@ describe("EmailService > send > validate", () => {
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			});
 		} catch (e) {
@@ -62,7 +63,7 @@ describe("EmailService > send > validate", () => {
 
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
-			errors: [InvalidParamsErrorMessage],
+			errors: [invalidParamsErrorMessage],
 		});
 	});
 
@@ -75,7 +76,7 @@ describe("EmailService > send > validate", () => {
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			} as any);
 		} catch (e) {
@@ -98,7 +99,7 @@ describe("EmailService > send > validate", () => {
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			});
 		} catch (e) {
@@ -123,7 +124,7 @@ describe("EmailService > send > validate", () => {
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			});
 		} catch (e) {
@@ -145,7 +146,7 @@ describe("EmailService > send > validate", () => {
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			} as any);
 		} catch (e) {
@@ -168,7 +169,7 @@ describe("EmailService > send > validate", () => {
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			});
 		} catch (e) {
@@ -183,17 +184,17 @@ describe("EmailService > send > validate", () => {
 		});
 	});
 
-	it(`should throw an error with invalid templateCode (length < ${Limits.template.code.min})`, async () => {
+	it(`should throw an error with invalid templateCode (length < ${LIMITS.template.code.min})`, async () => {
 		let result;
 
 		try {
 			await validate({
-				templateCode: "".padStart(Limits.template.code.min - 1, "a"),
+				templateCode: "".padStart(LIMITS.template.code.min - 1, "a"),
 				receiverEmail,
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			});
 		} catch (e) {
@@ -203,22 +204,22 @@ describe("EmailService > send > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`templateCode must be at least ${Limits.template.code.min} characters`,
+				`templateCode must be at least ${LIMITS.template.code.min} characters`,
 			],
 		});
 	});
 
-	it(`should throw an error with invalid templateCode (length > ${Limits.template.code.max})`, async () => {
+	it(`should throw an error with invalid templateCode (length > ${LIMITS.template.code.max})`, async () => {
 		let result;
 
 		try {
 			await validate({
-				templateCode: "".padStart(Limits.template.code.max + 1, "a"),
+				templateCode: "".padStart(LIMITS.template.code.max + 1, "a"),
 				receiverEmail,
 				application: ApplicationEnum.UNIQUE_LOGIN_SYSTEM,
 				language: LanguageEnum.EN,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			});
 		} catch (e) {
@@ -228,7 +229,7 @@ describe("EmailService > send > validate", () => {
 		expect(result.status).toBe(400);
 		expect(result.response).toMatchObject({
 			errors: [
-				`templateCode must be at most ${Limits.template.code.max} characters`,
+				`templateCode must be at most ${LIMITS.template.code.max} characters`,
 			],
 		});
 	});
@@ -242,7 +243,7 @@ describe("EmailService > send > validate", () => {
 				receiverEmail,
 				templateCode,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			} as any);
 		} catch (e) {
@@ -264,7 +265,7 @@ describe("EmailService > send > validate", () => {
 				receiverEmail,
 				templateCode,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 				language: 123 as any,
 			});
@@ -289,7 +290,7 @@ describe("EmailService > send > validate", () => {
 				receiverEmail,
 				templateCode,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 				language: "123" as any,
 			});
@@ -316,7 +317,7 @@ describe("EmailService > send > validate", () => {
 				receiverEmail,
 				templateCode,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 			} as any);
 		} catch (e) {
@@ -338,7 +339,7 @@ describe("EmailService > send > validate", () => {
 				receiverEmail,
 				templateCode,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 				application: 123 as any,
 			});
@@ -363,7 +364,7 @@ describe("EmailService > send > validate", () => {
 				receiverEmail,
 				templateCode,
 				extraData: {
-					userName: "Renato Razal",
+					userName,
 				},
 				application: "123" as any,
 			});

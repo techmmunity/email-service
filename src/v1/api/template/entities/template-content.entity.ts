@@ -16,7 +16,7 @@ import { TemplateEntity } from "./template.entity";
 
 import { LanguageEnum, LanguageValues } from "core/enums/language";
 
-import { Limits } from "v1/config/limits";
+import { LIMITS } from "v1/config/limits";
 
 import { DefaultOmitEntityFields } from "types/entity";
 
@@ -33,13 +33,13 @@ export class TemplateContentEntity extends BaseEntity {
 	public language: LanguageEnum;
 
 	@Column({
-		length: Limits.templateContent.subject.max,
+		length: LIMITS.templateContent.subject.max,
 		nullable: false,
 	})
 	public subject: string;
 
 	@Column({
-		length: Limits.templateContent.content.max,
+		length: LIMITS.templateContent.content.max,
 		nullable: false,
 	})
 	public content: string;

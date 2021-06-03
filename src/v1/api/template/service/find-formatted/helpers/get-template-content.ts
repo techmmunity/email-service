@@ -1,6 +1,6 @@
 import { TemplateEntity } from "v1/api/template/entities/template.entity";
 
-import { ErrorUtil } from "v1/utils/error";
+import { errorUtil } from "v1/utils/error";
 
 import { LanguageEnum } from "core/enums/language";
 
@@ -18,7 +18,7 @@ export const getTemplateContent = ({
 	);
 
 	if (!templateContent) {
-		return ErrorUtil.notFound([
+		return errorUtil.notFound([
 			`Template content with language "${language}" not found`,
 		]);
 	}

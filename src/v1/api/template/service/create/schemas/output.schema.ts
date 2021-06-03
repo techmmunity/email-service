@@ -7,10 +7,13 @@ import {
 	TemplateFieldTypeValues,
 } from "core/enums/template-field-type";
 
+const templateIdDescription = "Template ID";
+const templateIdExample = "a63d5299-009a-40a8-b028-bbeec0d19e6b";
+
 class CreateTemplateFieldsOutputSchema {
 	@ApiProperty({
-		description: "Template id",
-		example: "a63d5299-009a-40a8-b028-bbeec0d19e6b",
+		description: templateIdDescription,
+		example: templateIdExample,
 	})
 	public templateId: string;
 
@@ -48,8 +51,8 @@ class CreateTemplateFieldsOutputSchema {
 
 class CreateTemplateContentsOutputSchema {
 	@ApiProperty({
-		description: "Template id",
-		example: "a63d5299-009a-40a8-b028-bbeec0d19e6b",
+		description: templateIdDescription,
+		example: templateIdExample,
 	})
 	public templateId: string;
 
@@ -88,8 +91,8 @@ class CreateTemplateContentsOutputSchema {
 
 export class CreateTemplateOutputSchema {
 	@ApiProperty({
-		description: "Template id",
-		example: "a63d5299-009a-40a8-b028-bbeec0d19e6b",
+		description: templateIdDescription,
+		example: templateIdExample,
 	})
 	public id: string;
 
