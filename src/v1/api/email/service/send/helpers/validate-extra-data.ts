@@ -1,6 +1,6 @@
 import { ObjectShape } from "yup/lib/object";
 
-import { ErrorUtil } from "v1/utils/error";
+import { errorUtil } from "v1/utils/error";
 import { yup } from "v1/utils/yup";
 
 import { TemplateFieldTypeEnum } from "core/enums/template-field-type";
@@ -19,7 +19,7 @@ const emailValidation = yup.string().strict().required().email();
 const uuidValidation = yup.string().strict().required().uuid();
 
 const makeYupValidation = (fields: ValidateExtraDataParams["fields"]) => {
-	const objectShape = fields.reduce((acc, cur) => {
+	const objectShape = fields.reduce<ObjectShape>((acc, cur) => {
 		const { field, type } = cur;
 
 		switch (type) {
@@ -29,16 +29,17 @@ const makeYupValidation = (fields: ValidateExtraDataParams["fields"]) => {
 			case TemplateFieldTypeEnum.NUMBER:
 				acc[field] = numberValidation;
 				break;
-			case TemplateFieldTypeEnum.STRING:
-				acc[field] = stringValidation;
-				break;
 			case TemplateFieldTypeEnum.UUID:
 				acc[field] = uuidValidation;
+				break;
+			case TemplateFieldTypeEnum.STRING:
+			default:
+				acc[field] = stringValidation;
 				break;
 		}
 
 		return acc;
-	}, {} as ObjectShape);
+	}, {});
 
 	return yup.object().shape(objectShape);
 };
@@ -53,5 +54,5 @@ export const validateExtraData = ({
 
 	return schema
 		.validate(extraData)
-		.catch(err => ErrorUtil.badRequest(err.errors));
+		.catch(err => errorUtil.badRequest(err.errors));
 };

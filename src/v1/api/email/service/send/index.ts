@@ -11,8 +11,8 @@ import { ApplicationEnum } from "core/enums/applications";
 import { LanguageEnum } from "core/enums/language";
 
 interface Injectables {
-	TemplateService: TemplateService;
-	MailerService: MailerService;
+	templateService: TemplateService;
+	mailerService: MailerService;
 }
 
 export interface SendParams {
@@ -24,7 +24,7 @@ export interface SendParams {
 }
 
 export const send = async (
-	{ TemplateService, MailerService }: Injectables,
+	{ templateService, mailerService }: Injectables,
 	params: SendParams,
 ) => {
 	await validate(params);
@@ -32,7 +32,7 @@ export const send = async (
 	const { templateCode, application, language, receiverEmail, extraData } =
 		params;
 
-	const template = await TemplateService.findFormatted({
+	const template = await templateService.findFormatted({
 		code: templateCode,
 		language,
 		application,
@@ -52,7 +52,7 @@ export const send = async (
 		string: template.content,
 	});
 
-	await MailerService.sendMail({
+	await mailerService.sendMail({
 		subject,
 		to: receiverEmail,
 		html: content,

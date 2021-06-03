@@ -4,7 +4,7 @@ export interface CreateTemplateFieldDoc {
 	templateId: string;
 	field: string;
 	type: TemplateFieldTypeEnum;
-	descripion: string;
+	description: string;
 	createdAt?: Date;
 	updatedAt?: Date;
 }
@@ -13,14 +13,14 @@ export const doc = ({
 	templateId,
 	field,
 	type,
-	descripion,
+	description,
 	createdAt,
 	updatedAt,
 }: CreateTemplateFieldDoc) => ({
 	templateId,
 	field,
 	type,
-	descripion,
+	descripion: description,
 	createdAt: createdAt || new Date(),
 	updatedAt: updatedAt || new Date(),
 });

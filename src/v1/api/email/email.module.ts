@@ -30,6 +30,4 @@ const { EMAIL_EMAIL, EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT } = process.env;
 	controllers: [EmailController],
 	providers: [EmailService, TemplateModule],
 })
-export class EmailModule {
-	//
-}
+export class EmailModule {}

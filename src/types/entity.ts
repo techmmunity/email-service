@@ -1,10 +1,10 @@
 export type DefaultOmitEntityFields =
 	| "_id"
-	| "reload"
+	| "createdAt"
+	| "hasId"
 	| "recover"
-	| "softRemove"
+	| "reload"
 	| "remove"
 	| "save"
-	| "hasId"
-	| "createdAt"
+	| "softRemove"
 	| "updatedAt";

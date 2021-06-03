@@ -8,17 +8,15 @@ import { send, SendParams } from "./service/send";
 @Injectable()
 export class EmailService {
 	public constructor(
-		private readonly TemplateService: TemplateService,
-		private readonly MailerService: MailerService,
-	) {
-		//
-	}
+		private readonly templateService: TemplateService,
+		private readonly mailerService: MailerService,
+	) {}
 
 	public send(params: SendParams) {
 		return send(
 			{
-				TemplateService: this.TemplateService,
-				MailerService: this.MailerService,
+				templateService: this.templateService,
+				mailerService: this.mailerService,
 			},
 			params,
 		);

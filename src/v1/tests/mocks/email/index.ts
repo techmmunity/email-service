@@ -4,7 +4,7 @@ const mailerService = {
 	sendMail: jest.fn(),
 };
 
-export const EmailMock = {
+export const emailMock = {
 	service: service(mailerService),
 	mailerService,
 };

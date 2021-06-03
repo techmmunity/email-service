@@ -12,7 +12,7 @@ import { LanguageEnum } from "core/enums/language";
 import { TemplateFieldTypeEnum } from "core/enums/template-field-type";
 
 interface Injectables {
-	TemplateRepository: TemplateRepository;
+	templateRepository: TemplateRepository;
 }
 
 export interface CreateParams {
@@ -31,7 +31,7 @@ export interface CreateParams {
 }
 
 export const create = async (
-	{ TemplateRepository }: Injectables,
+	{ templateRepository }: Injectables,
 	params: CreateParams,
 ) => {
 	await validate(params);
@@ -40,35 +40,40 @@ export const create = async (
 
 	const templateId = v4();
 
-	return TemplateRepository.save({
-		id: templateId,
-		application,
-		code,
-		fields: fields.map(({ field, type, description }) => ({
-			templateId,
-			field,
-			type,
-			description,
-		})),
-		contents: contents.map(({ language, content, subject }) => ({
-			templateId,
-			language,
-			content,
-			subject,
-		})),
-	}).catch(
-		dbHandler([
-			{
-				error: PgErrorEnum.UniqueViolation,
-				table: "templates",
-				columns: ["application", "code"],
-				responseCode: HttpCodeEnum.Conflict,
-				makeError: ({ application, code }) => ({
-					errors: [
-						`Template with code "${code}" already exists for application "${application}"`,
-					],
-				}),
-			},
-		]),
-	);
+	return templateRepository
+		.save({
+			id: templateId,
+			application,
+			code,
+			fields: fields.map(({ field, type, description }) => ({
+				templateId,
+				field,
+				type,
+				description,
+			})),
+			contents: contents.map(({ language, content, subject }) => ({
+				templateId,
+				language,
+				content,
+				subject,
+			})),
+		})
+		.catch(
+			dbHandler([
+				{
+					error: PgErrorEnum.UniqueViolation,
+					table: "templates",
+					columns: ["application", "code"],
+					responseCode: HttpCodeEnum.Conflict,
+					makeError: ({
+						application: existentAppication,
+						code: existentCode,
+					}) => ({
+						errors: [
+							`Template with code "${existentCode}" already exists for application "${existentAppication}"`,
+						],
+					}),
+				},
+			]),
+		);
 };
